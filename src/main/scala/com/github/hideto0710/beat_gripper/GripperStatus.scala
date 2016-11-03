@@ -1,4 +1,4 @@
-package com.hideto0710.beat_gripper
+package com.github.hideto0710.beat_gripper
 
 sealed abstract class GripperStatus(val text: String)
 case object NotYet extends GripperStatus("未だ出勤されていません")

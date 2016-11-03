@@ -1,4 +1,4 @@
-package com.hideto0710.beat_gripper
+package com.github.hideto0710.beat_gripper
 
 import scala.beans.BeanProperty
 
