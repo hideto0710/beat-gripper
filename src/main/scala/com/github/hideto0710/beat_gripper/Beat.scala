@@ -17,7 +17,7 @@ object Beat extends RequestHandler[BeatRequest, BeatResponse] {
     BeatRequestStatus.fromId(request.status) match {
       case Attend => exec(Attend, request.user, request.password)
       case Leave => exec(Leave, request.user, request.password)
-      case _ => BeatResponse(BadRequest.code, s"Inputted ${request.status} not supported.")
+      case _ => BeatResponse(BadRequest, s"Inputted ${request.status} not supported.")
     }
   }
 
@@ -28,15 +28,15 @@ object Beat extends RequestHandler[BeatRequest, BeatResponse] {
       (status, gripperStatus) match {
         case (Attend, NotYet) =>
           clickBtn("btn_s")
-          new BeatResponse(Success.code)
+          BeatResponse(Success)
         case (Leave, Working) =>
           clickBtn("btn_t")
-          new BeatResponse(Success.code)
+          BeatResponse(Success)
         case (s, gs) =>
-          BeatResponse(BadRequest.code, s"Try changing to $s, but message is ${gs.text}.")
+          BeatResponse(BadRequest, s"Try changing to $s, but message is ${gs.text}.")
       }
     } else {
-      BeatResponse(Unauthorized.code, s"Could not login.")
+      BeatResponse(Unauthorized, s"Could not login.")
     }
   }
 

@@ -13,5 +13,11 @@ case class BeatResponse(
   @BeanProperty var detail: String
 ) {
   def this() = this(status = InternalServerError.code, detail = "")
-  def this(status: Int) = this(status, "")
+}
+
+object BeatResponse {
+  def apply(status: BeatResponseStatus): BeatResponse = new BeatResponse(status.code, "")
+  def apply(status: BeatResponseStatus, detail: String = ""): BeatResponse = {
+    new BeatResponse(status.code, detail)
+  }
 }
