@@ -5,9 +5,8 @@ BeatGripper
 - AWS Lambda Function for Gripper
 
 ## How to use it
-1. Compile this code. `$ sbt assembly`
-2. Upload JAR file to AWS Lambda.
-3. Request
+1. Deploy this code. `$ ./scripts/deploy.sh`
+2. Request
 
 ## How to request
 ### Attend

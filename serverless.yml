@@ -1,0 +1,21 @@
+service: beat-gripper
+
+provider:
+  name: aws
+  region: ap-northeast-1
+  runtime: java8
+  iamRoleARN: <YourRole>
+
+package:
+  artifact: target/scala-2.11/beat-gripper.jar
+
+functions:
+  hello:
+    handler: com.github.hideto0710.beat_gripper.Beat::handleRequest
+    events:
+      - http:
+          path: working
+          method: post
+      - http:
+          path: working
+          method: delete

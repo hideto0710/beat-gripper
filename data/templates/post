@@ -1,0 +1,6 @@
+#set($inputRoot = $input.path('$'))
+{
+  "user" : $input.json('$.user'),
+  "password" : $input.json('$.password'),
+  "status" : 1
+}

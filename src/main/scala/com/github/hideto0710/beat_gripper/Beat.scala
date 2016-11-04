@@ -5,7 +5,7 @@ import com.gargoylesoftware.htmlunit.BrowserVersion
 import org.openqa.selenium.UnhandledAlertException
 import org.openqa.selenium.htmlunit.HtmlUnitDriver
 
-object Beat extends RequestHandler[BeatRequest, BeatResponse] {
+object Beat extends RequestHandler[BeatRequest, Response] {
   implicit private val driver = new HtmlUnitDriver(BrowserVersion.CHROME)
   private val Url = "https://gripper-user.com/GripperMobile/"
 
@@ -13,12 +13,14 @@ object Beat extends RequestHandler[BeatRequest, BeatResponse] {
     exec(Attend, "user", "password")
   }
 
-  override def handleRequest(request: BeatRequest, context: Context): BeatResponse = {
-    BeatRequestStatus.fromId(request.status) match {
+  override def handleRequest(request: BeatRequest, context: Context): Response = {
+    val beatResponse = BeatRequestStatus.fromId(request.status) match {
       case Attend => exec(Attend, request.user, request.password)
       case Leave => exec(Leave, request.user, request.password)
       case _ => BeatResponse(BadRequest, s"Inputted ${request.status} not supported.")
     }
+    val body = Map("status" -> beatResponse.status, "detail" -> beatResponse.detail)
+    Response(body, beatResponse.status)
   }
 
   private def exec(status: BeatRequestStatus, user: String, password: String): BeatResponse = {
