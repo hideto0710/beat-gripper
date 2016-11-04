@@ -11,20 +11,20 @@ BeatGripper
 ## How to request
 ### Attend
 ```
-{
-  "user": "user",
-  "password": "password",
-  "status": 1
-}
+curl -X "POST" "https://<API Gateway Host>/<stage>/working" \
+     -H "x-api-key: <API Key>" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "{\"user\":\"user\",\"password\":\"password\"}"
+
 ```
 
 ### Leave
 ```
-{
-  "user": "user",
-  "password": "password",
-  "status": -1
-}
+curl -X "DELETE" "https://<API Gateway Host>/<stage>/working" \
+     -H "x-api-key: <API Key>m" \
+     -H "Content-Type: application/json; charset=utf-8" \
+     -d "{\"user\":\"user\",\"password\":\"password\"}"
+
 ```
 
 ## Response
@@ -39,15 +39,13 @@ BeatGripper
 ### Invalid user, password
 ```
 {
-  "status": 401,
-  "detail": "Could not login."
+  "errorMessage": "401: Could not login."
 }
 ```
 
 ### Invalid status
 ```
 {
-  "status": 400,
-  "detail": "Inputted 2 not supported."
+  "errorMessage": "400: Inputted 2 not supported."
 }
 ```
