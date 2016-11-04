@@ -24,7 +24,8 @@ object Beat extends RequestHandler[BeatRequest, BeatResponse] {
   private def exec(status: BeatRequestStatus, user: String, password: String): BeatResponse = {
     if (login(user, password)) {
       println("Page title is: " + driver.getTitle)
-      val gripperStatus = GripperStatus.fromMessage(driver.findElementById("msg").getText)
+      val msg = driver.findElementById("msg").getText
+      val gripperStatus = GripperStatus.fromMessage(msg)
       (status, gripperStatus) match {
         case (Attend, NotYet) =>
           clickBtn("btn_s")
@@ -33,7 +34,7 @@ object Beat extends RequestHandler[BeatRequest, BeatResponse] {
           clickBtn("btn_t")
           BeatResponse(Success)
         case (s, gs) =>
-          BeatResponse(BadRequest, s"Try changing to $s, but message is ${gs.text}.")
+          BeatResponse(BadRequest, s"Try changing to $s, but message is $msg.")
       }
     } else {
       BeatResponse(Unauthorized, s"Could not login.")
