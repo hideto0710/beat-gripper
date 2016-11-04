@@ -14,13 +14,13 @@ object Beat extends RequestHandler[BeatRequest, Response] {
   }
 
   override def handleRequest(request: BeatRequest, context: Context): Response = {
-    val beatResponse = BeatRequestStatus.fromId(request.status) match {
+    val res = BeatRequestStatus.fromId(request.status) match {
       case Attend => exec(Attend, request.user, request.password)
       case Leave => exec(Leave, request.user, request.password)
       case _ => BeatResponse(BadRequest, s"Inputted ${request.status} not supported.")
     }
-    val body = Map("status" -> beatResponse.status, "detail" -> beatResponse.detail)
-    Response(body, beatResponse.status)
+    if (res.status != Success.code) throw new Exception(s"${res.status}: ${res.detail}")
+    Response(Map("detail" -> res.detail), res.status)
   }
 
   private def exec(status: BeatRequestStatus, user: String, password: String): BeatResponse = {

@@ -24,7 +24,7 @@ case class Response(
 )
 object Response {
   val contentJson = "Content-Type" -> "application/json"
-  def apply(body: Map[String, Any], statusCode: Int) = {
+  def apply(body: Map[String, String], statusCode: Int) = {
     new Response(toJSONString(body), Map(contentJson), statusCode)
   }
 }

@@ -1,4 +1,4 @@
-service: beat-gripper
+service: gripper
 
 provider:
   name: aws
@@ -10,7 +10,7 @@ package:
   artifact: target/scala-2.11/beat-gripper.jar
 
 functions:
-  hello:
+  beat:
     handler: com.github.hideto0710.beat_gripper.Beat::handleRequest
     events:
       - http:
